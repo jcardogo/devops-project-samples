@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jsf-k8s-app
+  labels:
+    app: jsf-k8s-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jsf-k8s-app
+  template:
+    metadata:
+      labels:
+        app: jsf-k8s-app
+    spec:
+      containers:
+      - name: jsf-k8s-container
+        image: acardogocr.azurecr.io/jsf-k8s-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ENVIRONMENT
+          value: "production"

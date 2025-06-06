@@ -17,10 +17,10 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: 'YourACRServiceConnection'
+        containerRegistry: 'acardogocr'
         repository: '$(imageName)'
         command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: 'java/jsf/kubernetes/Application/Dockerfile'
         tags: |
           $(tag)
 
@@ -33,9 +33,9 @@ stages:
     - task: Kubernetes@1
       inputs:
         connectionType: 'Azure Resource Manager'
-        azureSubscription: 'YourAzureSubscription'
-        azureResourceGroup: 'YourResourceGroup'
-        kubernetesCluster: 'YourAKSCluster'
+        azureSubscription: 'Azure subscription 1'
+        azureResourceGroup: 'DefaultResourceGroup-EUS'
+        kubernetesCluster: 'myAKSCluster'
         namespace: 'default'
         command: 'apply'
         useConfigurationFile: true
