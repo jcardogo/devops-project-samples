@@ -13,7 +13,7 @@ stages:
   jobs:
   - job: BuildAndPush
     pool:
-      name: acardogo-HP-EliteBook-840-G6
+      name: laptop-agent
     steps:
     - task: Docker@2
       inputs:
@@ -28,7 +28,7 @@ stages:
   jobs:
   - job: DeployToAKS
     pool:
-      name: acardogo-HP-EliteBook-840-G6
+      name: laptop-agent
     steps:
     - task: Kubernetes@1
       inputs:
