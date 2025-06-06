@@ -13,11 +13,7 @@ stages:
   jobs:
   - job: BuildAndPush
     pool:
-<<<<<<< HEAD
       vmImage: 'Default'
-=======
-      vmImage: 'ubuntu-latest'
->>>>>>> parent of fc747ee (changing vm pool on pipeline)
     steps:
     - task: Docker@2
       inputs:
