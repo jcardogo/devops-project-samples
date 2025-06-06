@@ -13,7 +13,7 @@ stages:
   jobs:
   - job: BuildAndPush
     pool:
-      vmImage: 'Default'
+      name: acardogo-HP-EliteBook-840-G6
     steps:
     - task: Docker@2
       inputs:
@@ -28,7 +28,7 @@ stages:
   jobs:
   - job: DeployToAKS
     pool:
-      vmImage: 'Default'
+      name: acardogo-HP-EliteBook-840-G6
     steps:
     - task: Kubernetes@1
       inputs:
