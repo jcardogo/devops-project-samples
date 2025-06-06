@@ -28,7 +28,7 @@ stages:
   jobs:
   - job: DeployToAKS
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'Default'
     steps:
     - task: Kubernetes@1
       inputs:
