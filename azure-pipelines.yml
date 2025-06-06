@@ -1,29 +1,42 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
-- master
-
-resources:
-- repo: self
+  branches:
+    include:
+      - main
 
 variables:
-  tag: '$(Build.BuildId)'
+  imageName: jsf-k8s-app
+  tag: $(Build.BuildId)
+  acrName: youracrname.azurecr.io
 
 stages:
 - stage: Build
-  displayName: Build image
   jobs:
-  - job: Build
-    displayName: Build
+  - job: BuildAndPush
     pool:
-      vmImage: ubuntu-latest
+      vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
-      displayName: Build an image
       inputs:
-        command: build
-        dockerfile: 'acardogo_fist_sampler'
+        containerRegistry: 'YourACRServiceConnection'
+        repository: '$(imageName)'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
+
+- stage: Deploy
+  jobs:
+  - job: DeployToAKS
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Azure Resource Manager'
+        azureSubscription: 'YourAzureSubscription'
+        azureResourceGroup: 'YourResourceGroup'
+        kubernetesCluster: 'YourAKSCluster'
+        namespace: 'default'
+        command: 'apply'
+        useConfigurationFile: true
+        configuration: '**/k8s/*.yaml'
